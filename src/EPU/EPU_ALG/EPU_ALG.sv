@@ -178,20 +178,7 @@ always_ff @(posedge clk or posedge rst) begin
     else if (cs==4'b0) mode <= 2'd1;
     else mode <= next_mode;
 end
-// assign next_mode = (block_finish)? ((mode==2'b11)? 2'b01 : (mode+2'd1)) : mode;
-always_comb begin
-    if (block_finish) begin
-        case (mode)
-            2'd1 : next_mode = 2'd3;
-            2'd3 : next_mode = 2'd2;
-            2'd2 : next_mode = 2'd1;
-            default : next_mode = 2'd0;
-        endcase
-    end
-    else begin
-        next_mode = mode;
-    end
-end
+assign next_mode = (block_finish)? ((mode==2'b11)? 2'b01 : (mode+2'd1)) : mode;
 //***************************************************************************************************
 //delay
 logic read_1, read_2;
